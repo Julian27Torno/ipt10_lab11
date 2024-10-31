@@ -7,7 +7,7 @@ use \PDO;
 
 class CourseEnrolment extends BaseModel
 {
-    // Enroll a student in a course
+
     public function enroll($course_code, $student_code, $enrollment_date)
     {
         $sql = "INSERT INTO course_enrollments SET 
@@ -22,11 +22,10 @@ class CourseEnrolment extends BaseModel
             'enrollment_date' => $enrollment_date
         ]);
 
-        // Return true if the insertion was successful, false otherwise
         return $success;
     }
 
-    // Get enrollees for a specific course
+
     public function getEnrolees($course_code)
     {
         $sql = "SELECT s.student_code, CONCAT(s.first_name, ' ', s.last_name) AS name, ce.enrolment_date, ce.grade

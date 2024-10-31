@@ -17,7 +17,7 @@ class Student extends BaseModel
         return $result;
     }
 
-    // Retrieve a student by id
+ 
     public function find($id)
     {
         $sql = "SELECT * FROM students WHERE id = :id LIMIT 1";

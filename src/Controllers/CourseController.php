@@ -6,7 +6,7 @@ namespace App\Controllers;
 use App\Models\Course;
 use App\Models\CourseEnrolment;
 use App\Controllers\BaseController;
-use Fpdf\Fpdf; // Ensure you have the FPDF library included
+use Fpdf\Fpdf; 
 
 class CourseController extends BaseController
 {
@@ -16,7 +16,7 @@ class CourseController extends BaseController
         $courseObj = new Course();
         $courses = $courseObj->all();
 
-        // Calculate the number of enrollees for each course
+      
         $enrolmentObj = new CourseEnrolment();
         foreach ($courses as $course) {
             $course->enrollee_count = count($enrolmentObj->getEnrolees($course->course_code));
@@ -32,7 +32,7 @@ class CourseController extends BaseController
         return $output;
     }
 
-    // View specific course details and enrollees
+
     public function viewCourse($course_code)
     {
         $courseObj = new Course();
@@ -52,7 +52,7 @@ class CourseController extends BaseController
         return $output;
     }
 
-    // Export course enrollees to PDF
+    
     public function exportCourseEnrollees($course_code)
 {
     $courseObj = new Course();
@@ -61,34 +61,32 @@ class CourseController extends BaseController
     $enrolmentObj = new CourseEnrolment();
     $enrollees = $enrolmentObj->getEnrolees($course_code);
 
-    // Create a new PDF document
     $pdf = new FPDF();
     $pdf->AddPage();
     $pdf->SetFont('Arial', 'B', 12);
 
-    // Course details
+
     $pdf->Cell(0, 10, "Course: " . $course->course_name, 0, 1);  // Use course_name
     $pdf->Cell(0, 10, "Description: " . $course->description, 0, 1);
     $pdf->Cell(0, 10, "Credits: " . $course->credits, 0, 1);
     $pdf->Ln(10);
 
-    // Table header
+
     $pdf->SetFont('Arial', 'B', 10);
     $pdf->Cell(40, 10, "Student Code", 1);
     $pdf->Cell(70, 10, "Student Name", 1);
     $pdf->Cell(50, 10, "Enrollment Date", 1);
     $pdf->Ln();
 
-    // Enrollees data
+
     $pdf->SetFont('Arial', '', 10);
     foreach ($enrollees as $enrollee) {
         $pdf->Cell(40, 10, $enrollee->student_code, 1);
-        $pdf->Cell(70, 10, $enrollee->name, 1);  // Make sure name is correctly populated
-        $pdf->Cell(50, 10, $enrollee->enrolment_date, 1);  // Ensure correct spelling
+        $pdf->Cell(70, 10, $enrollee->name, 1);  
+        $pdf->Cell(50, 10, $enrollee->enrolment_date, 1); 
         $pdf->Ln();
     }
 
-    // Output PDF
     $pdf->Output("D", "Course_{$course_code}_Enrollees.pdf");
 }
 
