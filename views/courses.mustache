@@ -9,23 +9,28 @@
 <body>
 
     <h1>Courses</h1>
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Course Name</th>
                 <th>Course Code</th>
+                <th>Enrollees</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-
-            {{# items }}
+            {{#items}}
             <tr>
-                <td>{{ id }}</td>
-                <td>{{ course_name }}</td>
-                <td>{{ course_code }}</td>
+                <td>{{@index}}</td>
+                <td>{{course_name}}</td>
+                <td>{{course_code}}</td>
+                <td>{{enrollee_count}}</td>
+                <td>
+                    <a href="/export-course/{{course_code}}" class="btn btn-primary">Export to PDF</a>
+                </td>
             </tr>
-            {{/ items }}
+            {{/items}}
         </tbody>
     </table>
 

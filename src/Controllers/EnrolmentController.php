@@ -32,7 +32,18 @@ class EnrolmentController extends BaseController
         $enrollment_date = $_POST['enrollment_date'];
         // Enroll Student to course
         // write code here
-        
+        $enrolmentObj = new CourseEnrolment();
+    $enrolled = $enrolmentObj->enroll($course_code, $student_code, $enrollment_date);
+
+    // Check if enrollment was successful
+    if ($enrolled) {
+        // Redirect to the course page if enrollment is successful
+        header("Location: /courses/{$course_code}");
+        exit;
+    } else {
+        // Handle enrollment failure (optional)
+        echo "Failed to enroll student in the course.";
+    }
         header("Location: /courses/{$course_code}");
     }
 }
